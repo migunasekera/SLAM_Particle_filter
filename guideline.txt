@@ -1,0 +1,66 @@
+
+
+Hello students,
+
+
+
+I just released the assignment 3, please look at it on CSMX.
+
+If you download the data set before 10 AM 2019/03/06,
+
+please download them again, since I updated some files for you.
+
+1. please look at "Project3_SLAM_2019.pdf" first.
+
+2. Please look at the data set and configuration files carefully. I uploaded some files for you.
+
+load_data.py : This file is an interface for loading the data in Python.
+
+p3_util.py : This includes a function to visualize lidar scan data.
+
+test_load_data.py : You can test util files with this test file.
+
+docs/platform_cofig.pdf : In this file, you can see the configuration of the robot. Please look at them carefully.
+
+
+Encoders.mat : it has timestamp and values(4 channel count data, please look at platform_cofig.pdf)
+
+Hokuyo.mat : lidar scan data (please look at load_data.py)
+
+imu.mat : This has acceleration and angular velocity (please look at load_data.py)
+
+3. Try dead-reckoning with encoder data and plot the robot trajectory
+
+
+4. Try mapping from the first scan and plot the map
+
+
+5. Try occupancy grid map and update the map with new scan data
+
+
+6. Try prediction only and plot the robot trajectories (100 for N=100 particles) 
+
+7. Try the update step with only 3-4 particles and see if the weight update makes sense
+
+
+8. MapUtils 
+
+ bresenham2D.py: a function for getMapCellsFromRay
+
+getMapCellsFromRay is a function for mapping from scan data 
+
+mapCorrelation is a function for registration between two scan data
+
+9. MapUtilsCython 
+
+Since the naive python codes of getMapCellsFromRay and mapCorrelation are very slow, we also Cython code for speed.
+
+Please try mapping with naive MapUtils and then please try MapUtilsCython when you need speed-up.
+
+Please read "readme.txt".
+
+10. It is not necessary to use "getMapCellsFromRay" and "mapCorrelation".
+
+It is just one method for mapping and registration. You can define your own method for more efficiency.  
+
+

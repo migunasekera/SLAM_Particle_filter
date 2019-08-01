@@ -17,7 +17,7 @@ if __name__ == "__main__":
         angles = np.double(dataIn['Hokuyo0']['angles'][0][0])
         ranges = np.array([dataIn['Hokuyo0']['ranges'][0][0][:,0]]).T
 
-        # take valid indices
+        # take valid indices. within the bounds
         indValid = np.logical_and((ranges < 30), (ranges > 0.1))
         ranges = ranges[indValid]
         angles = angles[indValid]
@@ -43,9 +43,12 @@ if __name__ == "__main__":
         # convert position in the map frame here
         Y = np.concatenate([np.concatenate([xs0, ys0], axis=0),
                             np.zeros(xs0.shape)], axis=0)
+
         # convert from meters to cells
         xis = np.ceil((xs0 - MAP['xmin']) / MAP['res']).astype(np.int16)-1
         yis = np.ceil((ys0 - MAP['ymin']) / MAP['res']).astype(np.int16)-1
+
+        # This takes care of weird indices
 
         indGood = np.logical_and(
             np.logical_and(
@@ -61,6 +64,9 @@ if __name__ == "__main__":
         x_range = np.arange(-0.2, 0.2+0.005, 0.005) + np.random.rand(1)*5
         y_range = np.arange(-0.2, 0.2+0.005, 0.005) + np.random.rand(1)*5
 
+
+        
+
         print("Testing map_correlation...")
         start = time.time()
         c = mu.mapCorrelation_fclad(MAP['map'], x_im, y_im,
@@ -71,6 +77,8 @@ if __name__ == "__main__":
                                 Y[0:3, :],
                                 x_range, y_range)
         end2 = time.time()
+        print(c2[:10])
+        break
         if np.sum(c == c2) == np.size(c):
             print("...Test passed.")
             speedup[i//1000] = (end1-start)/(end2-end1)

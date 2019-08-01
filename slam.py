@@ -153,9 +153,12 @@ if __name__ == "__main__":
     # plt.scatter(X,Y)
     # plt.scatter(X[:2000], Y[:2000], c='red')
     # plt.scatter(X[2000:], Y[2000:],c='blue')
+  
+    
     plt.quiver(X,Y, X_grad, Y_grad)
     plt.title(f'Odometry direction of {path[5:]}')
-    plt.show()
+    
     if args.save:
       print("vector plot saved")
       plt.savefig(f'Results/{path[5:]}.png')
+    plt.show()

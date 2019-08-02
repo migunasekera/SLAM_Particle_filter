@@ -124,25 +124,45 @@ if __name__ == "__main__":
     delta = np.zeros((len(robot.wheel_encoder_ts),len(robot.delta)))
 
     # Dead reckoning, to save positions
-    for i in np.arange(len(robot.wheel_encoder_ts)):
+    for i in np.arange(1, len(robot.wheel_encoder_ts), 3):
         dist[i,...], delta[i,...] = robot.deadReckoning(i)
     
     # Easier writing
-    tmp = dist.copy()
-    Dtmp = delta.copy()
-    X_grad = Dtmp[:,0]
-    Y_grad = Dtmp[:,1]
+    # tmp = dist[:-1000]
+
+    X = dist[:,0]
+    Y = dist[:,1]
+    
+    X_grad = delta[:,0]
+    Y_grad = delta[:,1]
 
     # Discretize pose positions for plotting on map
     x = robot.map['sizex']
     y = robot.map['sizey']
     xbins = np.arange(-x //2, x // 2)
     ybins = np.arange(-y //2, y // 2)
-    print(xbins[-10:])
-    print(ybins[-10:])
-    X = np.digitize(tmp[:,0], xbins, right=False)
-    # X_grad = np.digitize(Dtmp[:,0], xbins)
-    Y = np.digitize(tmp[:,1], ybins, right=False)
+    print(xbins)
+    print(len(ybins))
+    print(len(dist))
+
+    # print(ybins[-10:])
+    
+    
+    # X = np.digitize(dist[:,0], xbins, right=False)
+    # print(np.min(X))
+
+    
+    # # X_grad = np.digitize(Dtmp[:,0], xbins)
+    # Y = np.digitize(dist[:,1], ybins, right=False)
+    # plt.hist(X)
+    # plt.title("X-axis distribution")
+    # plt.show()
+    
+    # plt.hist(Y)
+    # plt.title("Y-axis distribution")
+    # plt.show()
+
+    
     # Y_grad = np.digitize(Dtmp[:,0], ybins)
 
     # pose = np.vstack((X,Y)).T
@@ -160,5 +180,5 @@ if __name__ == "__main__":
     
     if args.save:
       print("vector plot saved")
-      plt.savefig(f'Results/{path[5:]}.png')
+      plt.savefig(f'Results/{path[5:]}_2.png')
     plt.show()
